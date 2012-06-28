@@ -28,19 +28,16 @@ class ProfileFormType extends AbstractType
 
     public function buildForm(FormBuilder $builder, array $options)
     {
-        $child = $builder->create('user', 'form', array('data_class' => $this->class));
-        $this->buildUserForm($child, $options);
-
         $builder
-            ->add($child)
-            ->add('current', 'password')
+            ->add('username')
+            ->add('email', 'email')
         ;
     }
 
     public function getDefaultOptions(array $options)
     {
         return array(
-            'data_class' => 'FOS\UserBundle\Form\Model\CheckPassword',
+            'data_class' => $this->class,
             'intention'  => 'profile',
         );
     }
@@ -48,19 +45,5 @@ class ProfileFormType extends AbstractType
     public function getName()
     {
         return 'fos_user_profile';
-    }
-
-    /**
-     * Builds the embedded form representing the user.
-     *
-     * @param FormBuilder $builder
-     * @param array       $options
-     */
-    protected function buildUserForm(FormBuilder $builder, array $options)
-    {
-        $builder
-            ->add('username')
-            ->add('email', 'email')
-        ;
     }
 }
